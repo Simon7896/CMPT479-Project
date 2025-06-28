@@ -192,3 +192,9 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# Juliet testcases
+data/C/*
+data/2017-10-01-juliet-test-suite-for-c-cplusplus-v1-3.zip
+data/outputs/*
+data/testcases/*
