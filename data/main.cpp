@@ -10,6 +10,7 @@
 #include "llvm/Support/JSON.h"
 #include <fstream>
 #include <sstream>
+#include <set>
 
 using namespace clang;
 using namespace clang::tooling;
@@ -67,30 +68,85 @@ public:
     explicit JulietVisitor(ASTContext *context) : ctx(context) {}
 
     bool VisitFunctionDecl(FunctionDecl *FD) {
-    if (!FD->hasBody()) return true;
+        if (!FD->hasBody()) return true;
 
-    std::string fname = FD->getNameAsString();
-    int label = fname.find("bad") != std::string::npos ? 1 : 0;
+        std::string fname = FD->getNameAsString();
+        
+        // Skip built-in C functions and compiler-generated functions
+        if (isBuiltinOrStandardFunction(fname, FD)) {
+            return true;
+        }
 
-    std::unique_ptr<CFG> cfg = CFG::buildCFG(FD, FD->getBody(), ctx, CFG::BuildOptions());
-    if (!cfg) return true;
+        int label = fname.find("bad") != std::string::npos ? 1 : 0;
 
-    json::Object out;
-    out["function"] = fname;
-    out["label"] = label;
-    out["ast"] = SerializeAST(FD);
-    out["cfg"] = SerializeCFG(*cfg);
+        std::unique_ptr<CFG> cfg = CFG::buildCFG(FD, FD->getBody(), ctx, CFG::BuildOptions());
+        if (!cfg) {
+            llvm::errs() << "ERROR: Failed to build CFG for function: " << fname << "\n";
+            return true;
+        }
 
-    std::error_code EC;
-    llvm::raw_fd_ostream llvm_out("outputs/" + fname + ".json", EC, llvm::sys::fs::OF_Text);
-    llvm_out << json::Value(std::move(out));
+        json::Object out;
+        out["function"] = fname;
+        out["label"] = label;
+        out["ast"] = SerializeAST(FD);
+        out["cfg"] = SerializeCFG(*cfg);
 
-    llvm::outs() << "Exported function: " << fname << "\n";
-    return true;
-}
-
+        std::error_code EC;
+        llvm::raw_fd_ostream llvm_out("outputs/" + fname + ".json", EC, llvm::sys::fs::OF_Text);
+        if (EC) {
+            llvm::errs() << "ERROR: Failed to write output file for function " << fname 
+                         << ": " << EC.message() << "\n";
+            return true;
+        }
+        
+        llvm_out << json::Value(std::move(out));
+        
+        // Only output on success if there were issues (removed the normal success message)
+        return true;
+    }
 
 private:
+    bool isBuiltinOrStandardFunction(const std::string& fname, FunctionDecl *FD) {
+        // Skip functions from system headers
+        SourceManager &SM = ctx->getSourceManager();
+        if (SM.isInSystemHeader(FD->getLocation())) {
+            return true;
+        }
+        
+        // Skip common C standard library functions
+        static const std::set<std::string> builtinFunctions = {
+            "printf", "fprintf", "sprintf", "snprintf", "scanf", "fscanf", "sscanf",
+            "malloc", "calloc", "realloc", "free",
+            "strlen", "strcpy", "strncpy", "strcmp", "strncmp", "strcat", "strncat",
+            "strchr", "strrchr", "strstr", "strtok",
+            "memcpy", "memmove", "memset", "memcmp", "memchr",
+            "fopen", "fclose", "fread", "fwrite", "fseek", "ftell", "rewind",
+            "exit", "abort", "atexit", "system",
+            "atoi", "atol", "atof", "strtol", "strtoul", "strtod",
+            "isalpha", "isdigit", "isalnum", "isspace", "toupper", "tolower",
+            "time", "clock", "difftime", "mktime", "asctime", "ctime", "gmtime", "localtime",
+            "rand", "srand", "abs", "labs", "div", "ldiv",
+            "qsort", "bsearch",
+            "getenv", "putenv", "setenv", "unsetenv"
+        };
+        
+        if (builtinFunctions.count(fname) > 0) {
+            return true;
+        }
+        
+        // Skip functions starting with underscores (typically compiler-generated)
+        if (fname.length() > 0 && fname[0] == '_') {
+            return true;
+        }
+        
+        // Skip functions with no user-defined body (declarations only)
+        if (!FD->hasBody() || !FD->isThisDeclarationADefinition()) {
+            return true;
+        }
+        
+        return false;
+    }
+
     ASTContext *ctx;
 };
 
