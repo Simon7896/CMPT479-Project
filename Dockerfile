@@ -29,7 +29,10 @@ RUN apt-get update && \
     pkg-config \
     lsb-release \
     ca-certificates \
-    software-properties-common && \
+    openjdk-19-jdk \
+    software-properties-common \
+    sudo \
+    parallel && \
     rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip and install PyTorch Geometric dependencies
@@ -42,6 +45,10 @@ WORKDIR /app
 # Copy source files into the container
 # Assuming main.cpp and CMakeLists.txt are in the same directory
 COPY . .
+
+# Download dataset
+RUN cd data && \
+wget https://samate.nist.gov/SARD/downloads/test-suites/2017-10-01-juliet-test-suite-for-c-cplusplus-v1-3.zip
 
 # Build the tool
 RUN mkdir -p build && cd build && \
