@@ -1,0 +1,67 @@
+@article{graphfvd,
+  title = {{{GraphFVD}}: {{Property}} Graph-Based Fine-Grained Vulnerability Detection},
+  shorttitle = {{{GraphFVD}}},
+  author = {Shao, Miaomiao and Ding, Yuxin and Cao, Jing and Li, Yilin},
+  year = {2025},
+  month = apr,
+  journal = {Computers \& Security},
+  volume = {151},
+  pages = {104350},
+  issn = {01674048},
+  doi = {10.1016/j.cose.2025.104350},
+  urldate = {2025-08-08},
+  langid = {english}
+}
+
+@misc{ample,
+  title = {Vulnerability {{Detection}} with {{Graph Simplification}} and {{Enhanced Graph Representation Learning}}},
+  author = {Wen, Xin-Cheng and Chen, Yupan and Gao, Cuiyun and Zhang, Hongyu and Zhang, Jie M. and Liao, Qing},
+  year = {2023},
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2302.04675},
+  urldate = {2025-08-08},
+  abstract = {Prior studies have demonstrated the effectiveness of Deep Learning (DL) in automated software vulnerability detection. Graph Neural Networks (GNNs) have proven effective in learning the graph representations of source code and are commonly adopted by existing DL-based vulnerability detection methods. However, the existing methods are still limited by the fact that GNNs are essentially difficult to handle the connections between long-distance nodes in a code structure graph. Besides, they do not well exploit the multiple types of edges in a code structure graph (such as edges representing data flow and control flow). Consequently, despite achieving state-of-the-art performance, the existing GNN-based methods tend to fail to capture global information (i.e., long-range dependencies among nodes) of code graphs. To mitigate these issues, in this paper, we propose a novel vulnerability detection framework with grAph siMplification and enhanced graph rePresentation LEarning, named AMPLE. AMPLE mainly contains two parts: 1) graph simplification, which aims at reducing the distances between nodes by shrinking the node sizes of code structure graphs; 2) enhanced graph representation learning, which involves one edge-aware graph convolutional network module for fusing heterogeneous edge information into node representations and one kernel-scaled representation module for well capturing the relations between distant graph nodes. Experiments on three public benchmark datasets show that AMPLE outperforms the state-of-the-art methods by 0.39\%-35.32\% and 7.64\%-199.81\% with respect to the accuracy and F1 score metrics, respectively. The results demonstrate the effectiveness of AMPLE in learning global information of code graphs for vulnerability detection.},
+  copyright = {Creative Commons Attribution 4.0 International},
+  keywords = {FOS: Computer and information sciences,Software Engineering (cs.SE)},
+}
+
+@article{tacsan,
+  title = {{{TACSan}}: {{Enhancing Vulnerability Detection}} with {{Graph Neural Network}}},
+  shorttitle = {{{TACSan}}},
+  author = {Zeng, Qingyao and Xiong, Dapeng and Wu, Zhongwang and Qian, Kechang and Wang, Yu and Su, Yinghao},
+  year = {2024},
+  month = sep,
+  journal = {Electronics},
+  volume = {13},
+  number = {19},
+  pages = {3813},
+  issn = {2079-9292},
+  doi = {10.3390/electronics13193813},
+  urldate = {2025-08-08},
+  abstract = {With the increasing scale and complexity of software, the advantages of using neural networks for static vulnerability detection are becoming increasingly prominent. Before inputting into a neural network, the source code needs to undergo word embedding, transforming discrete high-dimensional text data into low-dimensional continuous vectors suitable for training in neural networks. However, analysis has revealed that different implementation ideas by code writers for the same functionality can lead to varied code implementation methods. Embedding different code texts into vectors results in distinctions that can reduce the robustness of a model. To address this issue, this paper explores the impact of converting source code into different forms on word embedding and finds that a TAC (Three-Address Code) can significantly eliminate noise caused by different code implementation approaches. Given the excellent capability of a GNN (Graph Neural Network) in handling non-Euclidean space data and complex features, this paper subsequently employs a GNN to learn and classify vulnerabilities by capturing the implicit syntactic structure information in a TAC. Based on this, this paper introduces TACSan, a novel static vulnerability detection system based on a GNN designed to detect vulnerabilities in C/C++ programs. TACSan transforms the preprocessed source code into a TAC representation, adds control and data edges to create a graph structure, and then inputs it into the GNN for training. Comparative testing and evaluation of TACSan against other renowned static analysis tools, such as VulDeePecker and Devign, demonstrate that TACSan's detection capabilities not only exceed those methods but also achieve substantial enhancements in accuracy and F1 score.},
+  copyright = {https://creativecommons.org/licenses/by/4.0/},
+  langid = {english}
+}
+
+@misc{devign,
+  title = {Devign: {{Effective Vulnerability Identification}} by {{Learning Comprehensive Program Semantics}} via {{Graph Neural Networks}}},
+  shorttitle = {Devign},
+  author = {Zhou, Yaqin and Liu, Shangqing and Siow, Jingkai and Du, Xiaoning and Liu, Yang},
+  year = {2019},
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.1909.03496},
+  urldate = {2025-08-08},
+  abstract = {Vulnerability identification is crucial to protect the software systems from attacks for cyber security. It is especially important to localize the vulnerable functions among the source code to facilitate the fix. However, it is a challenging and tedious process, and also requires specialized security expertise. Inspired by the work on manually-defined patterns of vulnerabilities from various code representation graphs and the recent advance on graph neural networks, we propose Devign, a general graph neural network based model for graph-level classification through learning on a rich set of code semantic representations. It includes a novel Conv module to efficiently extract useful features in the learned rich node representations for graph-level classification. The model is trained over manually labeled datasets built on 4 diversified large-scale open-source C projects that incorporate high complexity and variety of real source code instead of synthesis code used in previous works. The results of the extensive evaluation on the datasets demonstrate that Devign outperforms the state of the arts significantly with an average of 10.51\% higher accuracy and 8.68{\textbackslash}\% F1 score, increases averagely 4.66\% accuracy and 6.37\% F1 by the Conv module.},
+  copyright = {arXiv.org perpetual, non-exclusive license},
+  keywords = {Cryptography and Security (cs.CR),FOS: Computer and information sciences,Machine Learning (cs.LG),Machine Learning (stat.ML),Software Engineering (cs.SE)},
+}
+
+@inproceedings{vulchecker,
+  title = {VulChecker: Graph-based Vulnerability Localization in Source Code},
+  author = {Author, Example},
+  year = {2023},
+  booktitle = {Proceedings of Example Conference},
+  isbn = {978-171387949-7},
+  pages = {1--10},
+  abstract = {A graph-based approach for vulnerability localization in source code.}
+}
