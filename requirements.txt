@@ -1,0 +1,12 @@
+# PyTorch with CUDA support
+torch>=1.12.0
+torch-geometric>=2.0.0
+# Alternative CUDA-specific installation:
+# torch>=1.12.0+cu118 --extra-index-url https://download.pytorch.org/whl/cu118
+# torch-geometric>=2.0.0
+
+# Other dependencies
+scikit-learn>=1.0.0
+matplotlib>=3.5.0
+numpy>=1.21.0
+tqdm>=4.64.0

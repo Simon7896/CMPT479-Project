@@ -1,7 +1,10 @@
-FROM ubuntu:22.04
+# Use NVIDIA CUDA base image for GPU support
+FROM nvidia/cuda:12.9.1-devel-ubuntu22.04
 
 # Set environment variables for non-interactive installs
 ENV DEBIAN_FRONTEND=noninteractive
+ENV NVIDIA_VISIBLE_DEVICES=all
+ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
 # Install dependencies
 RUN apt-get update && \
@@ -35,9 +38,6 @@ RUN apt-get update && \
     parallel && \
     rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip and install PyTorch Geometric dependencies
-RUN pip3 install --upgrade pip && \
-    pip3 install torch torch_geometric --resume-retries 3
 
 # Set working directory
 WORKDIR /app
@@ -45,6 +45,10 @@ WORKDIR /app
 # Copy source files into the container
 # Assuming main.cpp and CMakeLists.txt are in the same directory
 COPY . .
+
+# Upgrade pip and install all dependencies
+RUN pip3 install --upgrade pip && \
+    pip3 install -r requirements.txt --resume-retries 3
 
 # Download dataset
 RUN cd data && \
