@@ -121,11 +121,11 @@ fi
 if [[ "$SHOW_PROGRESS" == "true" ]]; then
     # Show individual file progress
     find "$TESTCASE_DIR" -type f \( -name "*.c" -o -name "*.cpp" \) | \
-        parallel -j "$JOBS" --bar process_file {} "$SUPPORT_DIR" "$TOOL_BIN" "$SKIP_PROCESSED" "$OUTPUT_DIR" "$SHOW_PROGRESS"
+        parallel -j "$JOBS" process_file {} "$SUPPORT_DIR" "$TOOL_BIN" "$SKIP_PROCESSED" "$OUTPUT_DIR" "$SHOW_PROGRESS"
 else
-    # Show overall progress bar
+    # Use GNU parallel --progress for overall progress reporting
     find "$TESTCASE_DIR" -type f \( -name "*.c" -o -name "*.cpp" \) | \
-        parallel -j "$JOBS" --bar process_file {} "$SUPPORT_DIR" "$TOOL_BIN" "$SKIP_PROCESSED" "$OUTPUT_DIR" "$SHOW_PROGRESS" 2>/dev/null
+        parallel -j "$JOBS" --progress process_file {} "$SUPPORT_DIR" "$TOOL_BIN" "$SKIP_PROCESSED" "$OUTPUT_DIR" "$SHOW_PROGRESS"
 fi
 
 echo ""
