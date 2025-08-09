@@ -92,10 +92,10 @@ def main():
             json.dump(results, f, indent=2)
         print(f"Results saved to {results_path}")
         
-        # Save plots if requested
+        # Plot generation is handled by generate_plots.py using JSON logs
         if args.save_plots:
-            plot_path = os.path.join(config.log_dir, 'training_history.png')
-            trainer.plot_training_history(plot_path)
+            print("Note: Plot generation has moved to generate_plots.py.")
+            print("      Run: python3 generate_plots.py [--eval-roc --data_dir ... --ckpt best]")
         
         # Save final model
         trainer.save_model('final_model.pth')

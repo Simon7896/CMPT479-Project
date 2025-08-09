@@ -55,12 +55,25 @@
 % to be able to draw some self-contained figs
 \usepackage{tikz}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{xurl} % better URL line breaking
 
 % Import bib file
 \addbibresource{citations.bib}
 
+% Improve line breaking to reduce Underfull \hbox warnings in two-column layout
+\pretolerance=1000
+\emergencystretch=3em
+\hyphenpenalty=100
+\exhyphenpenalty=50
+
 %-------------------------------------------------------------------------------
+% Allow line breaks in links
+\hypersetup{breaklinks=true}
+
 \begin{document}
+\sloppy
+\hyphenation{vul-ner-a-bil-i-ty de-tec-tion ju-li-et con-trol-flow rep-re-sen-ta-tion hy-per-pa-ram-e-ter}
 %-------------------------------------------------------------------------------
 
 %don't want date printed
@@ -139,7 +152,7 @@ The architecture addresses common GNN challenges: batch normalization prevents o
 
 The model was trained with the following configuration:
 \begin{itemize}
-\item Learning rate: 0.0003 with ReduceLROnPlateau scheduling
+\item Learning rate: 0.0003 with Reduce\-LROn\-Plateau scheduling
 \item Batch size: 32
 \item Weight decay: 3e-4 for regularization
 \item Early stopping with patience of 15 epochs
@@ -170,11 +183,32 @@ The confusion matrix revealed:
 \item False Negatives: 2,553 (vulnerable functions missed by the model)
 \end{itemize}
 
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{../model/logs/confusion_matrix.png}
+	\caption{Confusion matrix on the test set.}
+	\label{fig:confusion-matrix}
+\end{figure}
+
 \subsection{Training Dynamics}
 
 The training process showed steady convergence with both training and validation accuracy reaching approximately 82\% by epoch 50. Training loss decreased from 0.64 to 0.40, while validation loss stabilized around 0.41, indicating good generalization without significant overfitting.
 
 The learning rate scheduler activated multiple times during training, reducing the learning rate when validation performance plateaued, which helped achieve final convergence.
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{../model/logs/training_loss.png}
+	\caption{Training and validation loss across epochs.}
+	\label{fig:training-loss}
+\end{figure}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{../model/logs/training_accuracy.png}
+	\caption{Training and validation accuracy across epochs.}
+	\label{fig:training-accuracy}
+\end{figure}
 
 \subsection{Architecture Effectiveness}
 
@@ -185,6 +219,13 @@ Several design choices proved effective:
 \item \textbf{Combined Pooling:} Mean and max pooling together provided richer graph-level representations than either alone
 \item \textbf{Batch Normalization:} Stabilized training and improved convergence
 \end{itemize}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=\linewidth]{../model/logs/roc_curve.png}
+	\caption{ROC curve with AUC for the binary classification task on the test set.}
+	\label{fig:roc-curve}
+\end{figure}
 
 %-------------------------------------------------------------------------------
 \section{Implementation Achievements}
@@ -300,7 +341,7 @@ Future work should focus on addressing the dataset limitations, improving model 
 \section*{Availability}
 %-------------------------------------------------------------------------------
 
-The complete source code, datasets, and experimental results for this project are publicly available at: \texttt{https://github.com/Simon7896/CMPT479-Project}. The repository includes:
+The complete source code, datasets, and experimental results for this project are publicly available at: \url{https://github.com/Simon7896/CMPT479-Project}. The repository includes:
 \begin{itemize}
 \item C++ Clang LibTooling implementation for AST/CFG extraction
 \item Python training pipeline with PyTorch Geometric

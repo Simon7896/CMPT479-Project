@@ -195,7 +195,13 @@ if [[ $? -eq 0 ]]; then
     echo "  Model checkpoints: ./model/checkpoints/"
     echo "  Training logs: ./model/logs/"
     if [[ "$SAVE_PLOTS" == "true" ]]; then
-        echo "  Training plots: ./model/logs/training_history.png"
+        echo "  To generate plots from logs, run:"
+        echo "    python3 generate_plots.py --eval-roc --data_dir $DATA_DIR --ckpt best"
+        echo "  Plots will be saved to:"
+        echo "    ./model/logs/training_loss.png"
+        echo "    ./model/logs/training_accuracy.png"
+        echo "    ./model/logs/confusion_matrix.png"
+        echo "    ./model/logs/roc_curve.png (if available)"
     fi
 else
     echo ""
