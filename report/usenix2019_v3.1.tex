@@ -257,6 +257,36 @@ The implementation includes:
 \end{itemize}
 
 %-------------------------------------------------------------------------------
+\section{Performance Comparison}
+%-------------------------------------------------------------------------------
+
+While our hybrid GCN-GAT model achieved reasonable performance on the Juliet Test Suite, it is important to contextualize these results against other approaches that have been specifically evaluated on the same dataset.
+
+\subsection{Comparative Analysis}
+
+Several studies have reported vulnerability detection results on the Juliet Test Suite, providing concrete benchmarks for comparison:
+
+\textbf{Convolutional Neural Networks:} Yang et al. \cite{yang2022cnn} achieved 96.1\% accuracy on the Juliet Test Suite using a convolutional neural network approach for software vulnerability detection, representing one of the highest reported accuracies on this dataset.
+
+\textbf{Graph Neural Networks:} Multiple graph-based neural network approaches have been evaluated on Juliet with varying degrees of success. Zhuang et al. \cite{zhuang2021disaggregated} proposed a disaggregated code graph representation with deep learning, reporting F1 scores of 0.84 (84\%) compared to much lower performance (F1 0.02-0.45) for static analyzers on the NIST Juliet test suite. Other graph-based studies include Yan et al.'s investigation of pattern learning capabilities in GNNs on Juliet \cite{yan2022pattern}, Hao \& Kwon's enhanced graph-based vulnerability detection pipelines \cite{hao2024enhancing}, and McLaughlin \& Lu's multi-class vulnerability prediction using value flow and graph neural networks \cite{mclaughlin2024multiclass}, though specific accuracy numbers for these latter studies are not readily available in published abstracts.
+
+\textbf{Static Analysis Tools:} Comprehensive evaluations of static application security testing (SAST) tools have shown varied performance on Juliet, with collective accuracy ranging widely depending on the specific vulnerability types and tool combinations, though specific numerical results vary significantly across different studies and tool configurations.
+
+\subsection{Analysis of Performance Gap}
+
+Our model's 81.8\% accuracy demonstrates comparable performance with other graph-based approaches but falls short of the best-performing CNN methods. Contextualizing our results within the graph-based neural network literature:
+
+\textbf{Competitive Graph-Based Performance:} Our 81.8\% accuracy aligns reasonably well with Zhuang et al.'s 84\% F1 score \cite{zhuang2021disaggregated}, suggesting our hybrid GCN-GAT approach achieves performance comparable to other graph-based methods on Juliet.
+
+\textbf{CNN Performance Advantage:} The 96.1\% accuracy achieved by Yang et al.'s CNN approach \cite{yang2022cnn} represents a significant 14.3 percentage point advantage over our graph-based method, indicating that sequential code representations may be more effective for this particular synthetic dataset.
+
+\textbf{Representation Trade-offs:} While graph-based approaches like ours capture structural relationships and control/data flow explicitly, CNN methods operating on raw source code sequences may better leverage local patterns and syntactic regularities that are critical for vulnerability detection in synthetic test cases.
+
+\textbf{Architecture Considerations:} The performance gap suggests that either: (1) our graph construction methodology may not capture the most relevant vulnerability-indicating features, (2) the hybrid GCN-GAT architecture requires further optimization, or (3) the Juliet dataset's synthetic nature may favor sequential pattern recognition over structural graph analysis.
+
+This comparison highlights the ongoing challenge in graph-based vulnerability detection: while theoretically well-motivated for capturing code structure, practical performance on established benchmarks suggests that simpler sequential approaches may be more effective for certain types of vulnerability patterns.
+
+%-------------------------------------------------------------------------------
 \section{Challenges and Limitations}
 %-------------------------------------------------------------------------------
 
