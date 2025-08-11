@@ -117,8 +117,6 @@ We implemented a complete pipeline using the Juliet Test Suite for C/C++, extrac
 
 Several recent works have explored graph-based approaches for vulnerability detection. Devign \cite{devign} demonstrated that GNNs can learn comprehensive program semantics from merged AST and call graphs, achieving state-of-the-art results on vulnerability detection. GraphFVD \cite{graphfvd} focused on property graph-based fine-grained vulnerability detection, while VulChecker \cite{vulchecker} employed graph-based localization techniques. TACSan \cite{tacsan} enhanced traditional vulnerability detection with GNNs, showing improvements over conventional static analysis tools.
 
-Our approach builds upon these foundations by combining AST and CFG representations in a hybrid architecture. Unlike previous work that primarily focused on single graph types, we merge structural (AST) and control flow information to capture both syntactic patterns and execution semantics that are crucial for vulnerability detection.
-
 %-------------------------------------------------------------------------------
 \section{Methodology}
 %-------------------------------------------------------------------------------
@@ -350,8 +348,6 @@ The complete source code, datasets, and experimental results for this project ar
 \item Docker configuration for reproducible experiments
 \item Comprehensive documentation and usage instructions
 \end{itemize}
-
-All code is released under an open-source license to facilitate reproducibility and future research in graph-based vulnerability detection.
 
 %-------------------------------------------------------------------------------
 \printbibliography
